@@ -705,3 +705,60 @@ body {
 @media (min-width: 481px) {
   #app-footer { left: 50%; transform: translateX(-50%); right: auto; width: 480px; }
 }
+
+html, body {
+  direction: rtl;
+  text-align: right;
+}
+
+details,
+summary,
+section,
+article,
+div,
+p,
+h1, h2, h3, h4, h5, h6,
+li,
+ul,
+ol,
+label,
+button,
+input,
+textarea {
+  direction: rtl;
+  text-align: right;
+}
+
+details * {
+  direction: rtl;
+  text-align: right;
+}
+
+details p,
+details div,
+details li,
+details ul,
+details ol,
+details span {
+  direction: rtl;
+  text-align: right;
+}
+
+details pre,
+details code,
+details textarea,
+details .example,
+details .example-box,
+details .prompt-box,
+details .card,
+details .content,
+details .accordion-content {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext;
+}
+
+details pre,
+details code {
+  white-space: pre-line;
+}
