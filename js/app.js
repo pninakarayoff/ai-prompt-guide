@@ -7,10 +7,11 @@ const state = {
   current: 0,
   ex1: { task: '', audience: '', goal: '', style: '', format: '' },
   ex2: { type: '', topic: '', audience: '', goal: '', style: '', format: '' },
-  selfcheck: new Set(), // indices of checked items
+  selfcheck: new Set(),
+  quiz: { current: 0, answers: {}, phase: 'q' }, // phase: 'q' | 'answered' | 'results'
 };
 
-const TOTAL = 11;
+const TOTAL = 12;
 
 /* --- Screen definitions ----------------------------------- */
 const screens = [
@@ -22,6 +23,7 @@ const screens = [
   { id: 'ch4',       label: 'פרק 4',       render: renderCh4 },
   { id: 'ch5',       label: 'פרק 5',       render: renderCh5 },
   { id: 'ex2',       label: 'תרגול 2',     render: renderEx2 },
+  { id: 'quiz',      label: 'בוחן',        render: renderQuiz },
   { id: 'templates', label: 'בנק תבניות', render: renderTemplates },
   { id: 'selfcheck', label: 'בדיקה עצמית', render: renderSelfCheck },
   { id: 'ending',    label: 'סיום',        render: renderEnding },
@@ -76,6 +78,15 @@ function renderApp() {
 
   if (isIntro || isEnding) {
     footer.style.display = 'none';
+  } else if (screen.id === 'quiz') {
+    footer.style.display  = 'flex';
+    btnBack.classList.toggle('hidden', state.current <= 1);
+    if (state.quiz.phase !== 'results') {
+      btnNext.style.display = 'none';
+    } else {
+      btnNext.style.display = '';
+      btnNext.textContent   = 'המשך לתבניות';
+    }
   } else {
     footer.style.display  = 'flex';
     btnNext.style.display = '';
@@ -539,7 +550,8 @@ function renderTemplates() {
           <p style="font-size:12px;color:var(--text-3);margin:10px 0 8px">${t.when}</p>
           <pre style="white-space:pre-wrap;font-family:var(--font);font-size:13px;color:var(--text-2);
                background:var(--bg-2,#111D31);padding:10px 12px;border-radius:var(--r-sm);
-               line-height:1.75;border:1px solid var(--border)" id="tmpl-pre-${i}">${escHtml(t.body)}</pre>
+               line-height:1.75;border:1px solid var(--border);
+               direction:rtl;text-align:right;" id="tmpl-pre-${i}">${escHtml(t.body)}</pre>
           <div class="output-actions" style="margin-top:8px">
             <button class="btn-copy" id="btn-tmpl-${i}" onclick="copyTemplate(${i})">
               ${iconCopy()} העתיקי תבנית
@@ -645,6 +657,191 @@ function renderEnding() {
     <div style="height:48px"></div>
   `;
   return div;
+}
+
+/* ============================================================
+   QUIZ SCREEN (Screen 8)
+   ============================================================ */
+
+const quizData = [
+  {
+    q: 'למה תוצאה חלשה מ-AI לא בהכרח אומרת שהכלי לא טוב?',
+    opts: [
+      'כי הכלי צריך שדרוג',
+      'כי הבקשה שנשלחה לא הייתה מספיק ברורה',
+      'כי שפה עברית לא נתמכת היטב',
+      'כי AI לא יכול להבין עסקים קטנים',
+    ],
+    correct: 1,
+    explain: 'הכלי מנחש את מה שחסר. ברוב המקרים הבעיה היא בניסוח — לא בכלי עצמו.',
+  },
+  {
+    q: 'מה הטעות הכי נפוצה של אנשים שמשתמשים ב-AI?',
+    opts: [
+      'כותבים בקשות ארוכות מדי',
+      'כותבים בשפה פורמלית מדי',
+      'כותבים בקשות כלליות מדי, בלי פרטים',
+      'לא מציינים את שם הכלי',
+    ],
+    correct: 2,
+    explain: 'בקשה כללית מדי מכריחה את הכלי לנחש. התוצאה תהיה תמיד גנרית.',
+  },
+  {
+    q: 'איזה מידע הכי חשוב לציין בפרומפט לכתיבת פוסט?',
+    opts: [
+      'שם הפלטפורמה, תאריך פרסום, מספר תווים',
+      'קהל יעד, מטרה וסגנון רצוי',
+      'הכותרת המוצעת ומספר השורות בלבד',
+      'הנושא בלבד — שאר הפרטים פחות חשובים',
+    ],
+    correct: 1,
+    explain: 'קהל + מטרה + סגנון הופכים פוסט גנרי לפוסט שמדבר ישירות אל הקהל הנכון.',
+  },
+  {
+    q: 'מה ההבדל בין בקשה כללית לבקשה מדויקת?',
+    opts: [
+      'הבקשה המדויקת ארוכה יותר בלבד',
+      'הבקשה המדויקת כוללת שאלות לכלי',
+      'אין הבדל — שניהן מייצרות תוצאות דומות',
+      'הבקשה המדויקת כוללת הקשר, קהל, מטרה וסגנון',
+    ],
+    correct: 3,
+    explain: 'הוספת הקשר, קהל, מטרה וסגנון היא מה שהופכת בקשה רגילה לפרומפט שנותן תוצאה.',
+  },
+  {
+    q: 'מה קורה כאשר הכלי לא מקבל מספיק מידע?',
+    opts: [
+      'הוא מבקש ממך להרחיב',
+      'הוא מחזיר שגיאה',
+      'הוא ממציא ומשלים את החסר',
+      'הוא מחזיר תשובה ריקה',
+    ],
+    correct: 2,
+    explain: 'הכלל המרכזי: מה שהכלי לא יודע, הוא ממציא. לכן חשוב לתת כמה שיותר הקשר.',
+  },
+];
+
+const optLetters = ['א', 'ב', 'ג', 'ד'];
+
+function renderQuiz() {
+  const qState = state.quiz;
+  const div = make('div');
+
+  if (qState.phase === 'results') {
+    renderQuizResults(div);
+  } else {
+    renderQuizQuestion(div, qState.current);
+  }
+  return div;
+}
+
+function renderQuizQuestion(container, qIdx) {
+  const q        = quizData[qIdx];
+  const answered = state.quiz.phase === 'answered';
+  const userAns  = state.quiz.answers[qIdx];
+
+  container.innerHTML = `
+    <h2 class="screen-title">בוחן הבנה</h2>
+    <p class="screen-subtitle">5 שאלות קצרות על מה שלמדת. בסוף תוכלי לראות את התשובות הנכונות.</p>
+
+    <p class="quiz-q-num">שאלה ${qIdx + 1} מתוך ${quizData.length}</p>
+    <p class="quiz-q-text">${q.q}</p>
+
+    <div id="quiz-opts">
+      ${q.opts.map((opt, i) => {
+        let cls = 'quiz-opt';
+        if (answered) {
+          if (i === q.correct) cls += ' correct';
+          else if (i === userAns) cls += ' wrong';
+          else cls += ' neutral-disabled';
+        }
+        return `
+          <button class="${cls}"
+                  ${answered ? 'disabled' : `onclick="quizSelect(${qIdx},${i})"`}>
+            <span class="quiz-opt-letter">${optLetters[i]}</span>
+            ${escHtml(opt)}
+          </button>`;
+      }).join('')}
+    </div>
+
+    ${answered ? `
+      <div class="quiz-hint">
+        <strong>${userAns === q.correct ? '✓ נכון!' : '✗ לא בדיוק.'}</strong>
+        ${escHtml(q.explain)}
+      </div>
+      <button class="quiz-next-btn" onclick="${qIdx < quizData.length - 1 ? 'quizAdvance()' : 'quizResults()'}">
+        ${qIdx < quizData.length - 1 ? `שאלה ${qIdx + 2} מתוך ${quizData.length} ←` : 'ראי את התוצאה ←'}
+      </button>
+    ` : ''}
+  `;
+}
+
+function renderQuizResults(container) {
+  const total = quizData.length;
+  const score = Object.entries(state.quiz.answers)
+    .filter(([i, ans]) => Number(ans) === quizData[i].correct).length;
+
+  let emoji, msg;
+  if      (score === total)    { emoji = '🏆'; msg = 'מושלם! הכל ברור.'; }
+  else if (score >= total - 1) { emoji = '⭐'; msg = 'כמעט מושלם — עוד מעט שם.'; }
+  else if (score >= 3)         { emoji = '💪'; msg = 'טוב! יש על מה לבנות.'; }
+  else                         { emoji = '📖'; msg = 'כדאי לחזור ולעיין בפרקים.'; }
+
+  container.innerHTML = `
+    <h2 class="screen-title">בוחן הבנה</h2>
+
+    <div class="quiz-score-wrap">
+      <span style="font-size:48px;display:block;margin-bottom:10px;line-height:1">${emoji}</span>
+      <div class="quiz-score-num">${score}/${total}</div>
+      <p class="quiz-score-label">${msg}</p>
+      <p class="quiz-score-sub">ענית נכון על ${score} מתוך ${total} שאלות</p>
+    </div>
+
+    <div class="quiz-review">
+      ${quizData.map((q, i) => {
+        const userAns = state.quiz.answers[i];
+        const ok      = Number(userAns) === q.correct;
+        return `
+          <div class="quiz-review-item ${ok ? 'ok' : 'bad'}">
+            <span class="quiz-review-icon">${ok ? '✓' : '✗'}</span>
+            <div class="quiz-review-text">
+              <strong>${escHtml(q.q)}</strong>
+              <span>${ok ? 'תשובה נכונה.' : `התשובה הנכונה: ${escHtml(q.opts[q.correct])}`}</span>
+            </div>
+          </div>`;
+      }).join('')}
+    </div>
+  `;
+
+  // Unhide the footer "next" button
+  const footer  = document.getElementById('app-footer');
+  const btnNext = document.getElementById('btn-next');
+  if (footer)  footer.style.display  = 'flex';
+  if (btnNext) { btnNext.style.display = ''; btnNext.textContent = 'המשך לתבניות'; }
+}
+
+function quizSelect(qIdx, optIdx) {
+  state.quiz.answers[qIdx] = optIdx;
+  state.quiz.phase = 'answered';
+  reRenderQuiz();
+}
+
+function quizAdvance() {
+  state.quiz.current++;
+  state.quiz.phase = 'q';
+  reRenderQuiz();
+}
+
+function quizResults() {
+  state.quiz.phase = 'results';
+  reRenderQuiz();
+}
+
+function reRenderQuiz() {
+  const c = document.getElementById('screen-container');
+  c.innerHTML = '';
+  c.appendChild(renderQuiz());
+  c.scrollTop = 0;
 }
 
 /* ============================================================
