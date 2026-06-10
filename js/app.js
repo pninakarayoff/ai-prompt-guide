@@ -235,8 +235,8 @@ function renderCh3() {
         </div>
         <div class="accordion-body" id="acc-ch3-${i}" dir="rtl">
           <p style="margin-top:10px;direction:rtl;text-align:right">${item.desc}</p>
-          <pre class="accordion-example" dir="rtl"><strong>דוגמה:</strong>
-${item.example}</pre>
+          <div class="accordion-example" dir="rtl"><strong>דוגמה:</strong>
+${item.example}</div>
         </div>
       </div>
     `).join('')}
@@ -549,10 +549,10 @@ function renderTemplates() {
         </div>
         <div class="accordion-body" id="acc-tmpl-${i}" dir="rtl">
           <p style="font-size:12px;color:var(--text-3);margin:10px 0 8px;direction:rtl;text-align:right">${t.when}</p>
-          <pre dir="rtl" style="white-space:pre-wrap;font-family:var(--font);font-size:13px;color:var(--text-2);
+          <div dir="rtl" style="white-space:pre-wrap;font-family:var(--font);font-size:13px;color:var(--text-2);
                background:var(--bg-2,#111D31);padding:10px 12px;border-radius:var(--r-sm);
                line-height:1.75;border:1px solid var(--border);
-               direction:rtl;text-align:right;unicode-bidi:embed;" id="tmpl-pre-${i}">${escHtml(t.body)}</pre>
+               direction:rtl;text-align:right;" id="tmpl-pre-${i}">${escHtml(t.body)}</div>
           <div class="output-actions" style="margin-top:8px">
             <button class="btn-copy" id="btn-tmpl-${i}" onclick="copyTemplate(${i})">
               ${iconCopy()} העתיקי תבנית
