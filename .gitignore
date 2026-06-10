@@ -1,0 +1,22 @@
+# Dependencies (if any are ever added)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment variables (none currently needed)
+.env
+.env.local
+.env.*.local
