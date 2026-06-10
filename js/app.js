@@ -233,9 +233,10 @@ function renderCh3() {
           <span><strong>${item.label}</strong> — ${item.title}</span>
           <svg class="accordion-chevron" id="chevron-ch3-${i}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
-        <div class="accordion-body" id="acc-ch3-${i}">
-          <p style="margin-top:10px">${item.desc}</p>
-          <pre class="accordion-example"><strong>דוגמה:</strong>\n${item.example}</pre>
+        <div class="accordion-body" id="acc-ch3-${i}" dir="rtl">
+          <p style="margin-top:10px;direction:rtl;text-align:right">${item.desc}</p>
+          <pre class="accordion-example" dir="rtl"><strong>דוגמה:</strong>
+${item.example}</pre>
         </div>
       </div>
     `).join('')}
@@ -546,12 +547,12 @@ function renderTemplates() {
           <span style="display:flex;align-items:center;gap:8px"><span>${t.icon}</span>${t.title}</span>
           <svg class="accordion-chevron" id="chevron-tmpl-${i}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
-        <div class="accordion-body" id="acc-tmpl-${i}">
-          <p style="font-size:12px;color:var(--text-3);margin:10px 0 8px">${t.when}</p>
-          <pre style="white-space:pre-wrap;font-family:var(--font);font-size:13px;color:var(--text-2);
+        <div class="accordion-body" id="acc-tmpl-${i}" dir="rtl">
+          <p style="font-size:12px;color:var(--text-3);margin:10px 0 8px;direction:rtl;text-align:right">${t.when}</p>
+          <pre dir="rtl" style="white-space:pre-wrap;font-family:var(--font);font-size:13px;color:var(--text-2);
                background:var(--bg-2,#111D31);padding:10px 12px;border-radius:var(--r-sm);
                line-height:1.75;border:1px solid var(--border);
-               direction:rtl;text-align:right;" id="tmpl-pre-${i}">${escHtml(t.body)}</pre>
+               direction:rtl;text-align:right;unicode-bidi:embed;" id="tmpl-pre-${i}">${escHtml(t.body)}</pre>
           <div class="output-actions" style="margin-top:8px">
             <button class="btn-copy" id="btn-tmpl-${i}" onclick="copyTemplate(${i})">
               ${iconCopy()} העתיקי תבנית
