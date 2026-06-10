@@ -1,0 +1,22 @@
+{
+  "name": "ai-prompt-guide",
+  "version": "1.0.0",
+  "description": "Interactive Hebrew mini-app for learning how to write better AI prompts",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -l 3000 .",
+    "dev": "npx live-server --port=3000 --host=localhost --no-browser=false"
+  },
+  "keywords": [
+    "ai",
+    "prompts",
+    "hebrew",
+    "interactive",
+    "education"
+  ],
+  "author": "Pnina Karayoff",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>איך לדבר עם AI כדי לקבל תוצאות טובות באמת</title>
+  <meta name="description" content="מיני-אפליקציה אינטראקטיבית ללמידת כתיבת פרומפטים טובים לכלי AI" />
+
+  <!-- Google Fonts: Heebo (Hebrew-optimized) — falls back to Arial Hebrew if offline -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Progress header -->
+    <header id="app-header">
+      <div id="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+        <div id="progress-fill"></div>
+      </div>
+      <div id="screen-meta">
+        <span id="screen-step"></span>
+        <span id="screen-label-text"></span>
+      </div>
+    </header>
+
+    <!-- Dynamic screen content -->
+    <main id="screen-container" aria-live="polite"></main>
+
+    <!-- Bottom navigation -->
+    <nav id="app-footer">
+      <button id="btn-back" class="btn-ghost" onclick="goBack()" aria-label="חזרה למסך הקודם">חזרה</button>
+      <button id="btn-next" class="btn-primary" onclick="goNext()" aria-label="המשך למסך הבא">הבא</button>
+    </nav>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
