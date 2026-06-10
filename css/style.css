@@ -11,14 +11,14 @@
   --surface:      #16233B;
   --surface-2:    #1C2D4A;
 
-  --border:       rgba(255,255,255,0.09);
-  --border-2:     rgba(255,255,255,0.18);
+  --border:       rgba(255,255,255,0.12);
+  --border-2:     rgba(255,255,255,0.24);
 
   --accent:       #F07230;
   --accent-2:     #FFAA60;
   --accent-dim:   rgba(240,114,48,0.70);
-  --accent-light: rgba(240,114,48,0.15);
-  --accent-glow:  rgba(240,114,48,0.34);
+  --accent-light: rgba(240,114,48,0.18);
+  --accent-glow:  rgba(240,114,48,0.46);
 
   --text-1: #EEF3FF;
   --text-2: #7A98C6;
@@ -37,8 +37,8 @@
   --grad-card: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 100%);
 
   --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:24px;
-  --sh-sm: 0 2px 12px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.05);
-  --sh-md: 0 8px 28px rgba(0,0,0,0.52), inset 0 1px 0 rgba(255,255,255,0.07);
+  --sh-sm: 0 2px 16px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.07);
+  --sh-md: 0 10px 36px rgba(0,0,0,0.62), inset 0 1px 0 rgba(255,255,255,0.10);
   --font: 'Heebo','Arial Hebrew',Arial,sans-serif;
 }
 
@@ -221,7 +221,7 @@ body {
   box-shadow: var(--sh-sm);
   transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
 }
-.card:hover { transform: translateY(-2px); box-shadow: var(--sh-md); border-color: var(--border-2); }
+.card:hover { transform: translateY(-2px); box-shadow: var(--sh-md); border-color: rgba(240,114,48,.28); }
 .card-title { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; }
 .card-text  { font-size: 14px; color: var(--text-2); line-height: 1.7; }
 
@@ -491,14 +491,19 @@ body {
   min-height: calc(100vh - 70px); min-height: calc(100dvh - 70px);
   padding-bottom: 24px;
 }
-.intro-hero { text-align: center; padding: 36px 8px 20px; }
+.intro-hero {
+  text-align: center;
+  padding: 36px 8px 20px;
+  background: radial-gradient(ellipse at 50% 30%, rgba(240,114,48,.10) 0%, transparent 65%);
+  border-radius: var(--r-xl);
+}
 .intro-emoji {
   font-size: 60px; display: block; margin-bottom: 18px; line-height: 1;
-  filter: drop-shadow(0 0 20px rgba(240,114,48,.55));
+  filter: drop-shadow(0 0 34px rgba(240,114,48,.85));
   animation: float 4s ease-in-out infinite;
 }
 @keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-7px); } }
-.intro-title { font-size: 26px; font-weight: 700; line-height: 1.25; margin-bottom: 14px; color: var(--text-1); letter-spacing: -0.4px; }
+.intro-title { font-size: 28px; font-weight: 700; line-height: 1.22; margin-bottom: 14px; color: var(--text-1); letter-spacing: -0.6px; }
 .intro-title span {
   background: var(--grad-acc);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -522,7 +527,7 @@ body {
   background: var(--grad-acc); color: #fff; border: none;
   border-radius: var(--r-xl); font-family: var(--font);
   font-size: 16px; font-weight: 700; cursor: pointer;
-  transition: all .2s ease; box-shadow: 0 6px 28px var(--accent-glow);
+  transition: all .2s ease; box-shadow: 0 6px 34px var(--accent-glow), 0 0 0 1px rgba(240,114,48,.22);
   -webkit-tap-highlight-color: transparent; letter-spacing: .3px;
 }
 .intro-cta-btn:hover  { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(242,128,64,.5); filter: brightness(1.08); }
@@ -611,8 +616,6 @@ body {
   font-size: 12px; font-weight: 700;
   background: rgba(255,255,255,.04);
   transition: all .18s;
-  /* push to end (left in RTL) */
-  margin-right: auto;
 }
 .quiz-hint {
   padding: 12px 14px;
@@ -660,6 +663,41 @@ body {
 }
 .quiz-score-label { font-size: 18px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; }
 .quiz-score-sub   { font-size: 14px; color: var(--text-2); }
+
+/* --- RTL enforcement — inner content --------------------- */
+/* Belt-and-suspenders: explicit RTL on all text-bearing inner elements */
+.card,
+.card > *,
+.compare-card,
+.compare-card > *,
+.compare-result,
+.compare-result > *,
+.accordion-body,
+.accordion-body > *,
+.use-case-card,
+.use-case-title,
+.use-case-when,
+.check-list li,
+.quiz-review-text,
+.quiz-review-text > * {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Grid containers: RTL column order (first col = right side) */
+.compare-grid,
+.compare-result-grid { direction: rtl; }
+
+/* Accordion header text span aligns right in RTL flex */
+.accordion-header { direction: rtl; }
+.accordion-header > span { flex: 1; text-align: right; }
+
+/* Selection cards: keep center-aligned (overrides above) */
+.selection-card { text-align: center; }
+
+/* Highlight/hint boxes */
+.highlight-box p,
+.quiz-hint { direction: rtl; text-align: right; }
 
 /* --- Responsive ------------------------------------------- */
 @media (min-width: 481px) {
