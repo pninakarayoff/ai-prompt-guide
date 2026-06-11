@@ -104,33 +104,35 @@ function renderIntro() {
   const div = make('div', { className: 'intro-wrap' });
   div.innerHTML = `
     <div class="intro-hero">
+      <span class="intro-brand">פנינה קריוף | AI Systems Architect</span>
       <span class="intro-emoji" role="img" aria-label="ניצוץ">✨</span>
       <h1 class="intro-title">
-        איך לדבר עם AI כדי לקבל<br>
-        <span>תוצאות טובות באמת</span>
+        איך לדבר עם AI<br>
+        <span>ולקבל תוצאות אמיתיות</span>
       </h1>
+      <p class="intro-lead">מדריך מעשי לאנשים שרוצים לעבוד עם AI בצורה יעילה</p>
     </div>
 
     <div class="intro-card">
-      <p class="card-text">אם ניסית לעבוד עם ChatGPT ויצאת עם תוצאה בינונית, הבעיה ברוב המקרים אינה בך ואינה בכלי.</p>
-      <p class="card-text mt-8"><strong style="color:var(--text-1)">הבעיה היא בדרך שבה מבקשים.</strong></p>
+      <p class="card-text">הבעיה ברוב המקרים אינה הכלי ואינה את.<br><strong style="color:var(--text-1)">הבעיה היא בדרך שבה מבקשים.</strong></p>
     </div>
 
     <div class="intro-card mt-12">
-      <p class="section-label" style="margin-bottom:10px">מה יש כאן</p>
+      <p class="section-label" style="margin-bottom:12px">מה תמצאי כאן</p>
       <ul class="intro-checklist">
-        ${['הסבר פשוט על הטעות הכי נפוצה',
-           'נוסחה לפרומפט טוב',
-           'שני תרגולים אינטראקטיביים',
-           'דוגמאות לפני ואחרי',
-           'בנק תבניות + בדיקה עצמית'].map(t => `
-          <li><span class="intro-check" aria-hidden="true">✓</span>${t}</li>
+        ${[['💡','למה בקשות כלליות נותנות תוצאות גנריות'],
+           ['🔑','נוסחה לפרומפט שעובד'],
+           ['✏️','שני תרגולים אינטראקטיביים'],
+           ['🔄','דוגמאות לפני ואחרי'],
+           ['📋','בנק תבניות ובדיקה עצמית']].map(([icon, text]) => `
+          <li><span class="intro-check" aria-hidden="true">${icon}</span>${text}</li>
         `).join('')}
       </ul>
     </div>
 
     <div class="intro-cta-wrap">
-      <button class="intro-cta-btn" onclick="navigate(1)">התחילי ← </button>
+      <button class="intro-cta-btn" onclick="navigate(1)">מתחילים ←</button>
+      <p class="intro-cta-note">חינמי · 10 דקות · ללא הרשמה</p>
     </div>
   `;
   return div;
