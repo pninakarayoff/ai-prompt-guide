@@ -153,7 +153,7 @@ function renderCh1() {
     ].map(([req, q]) => `
       <div class="card">
         <p style="font-size:15px;font-weight:500;color:var(--text-1);">${req}</p>
-        <p style="font-size:13px;color:var(--text-3);margin-top:4px;">← ${q}</p>
+        <p style="font-size:16px;color:#4B5563;margin-top:4px;">← ${q}</p>
       </div>
     `).join('')}
 
@@ -255,8 +255,8 @@ function renderEx1() {
     <h2 class="screen-title">בני פרומפט מאפס</h2>
     <p class="screen-subtitle">מלאי את השדות בצורה חופשית — לא צריך להתאים לשום תבנית. כל שדה נוסף שממלאים, הפרומפט נהיה מדויק יותר.</p>
 
-    <div class="card" style="margin-bottom:16px;background:rgba(96,165,250,.06);border-color:rgba(96,165,250,.2);">
-      <p style="font-size:13px;color:#93C5FD;line-height:1.6;">💡 <strong>מה מיוחד בתרגול הזה:</strong> את ממלאת שדות כלליים ומקבלת פרומפט מנוסח. אין הגבלה על הנושא — כל בקשה שתרצי.</p>
+    <div class="info-box">
+      <p class="info-box-text">💡 <strong>מה מיוחד בתרגול הזה:</strong> את ממלאת שדות כלליים ומקבלת פרומפט מנוסח. אין הגבלה על הנושא — כל בקשה שתרצי.</p>
     </div>
 
     <div class="form-group">
@@ -464,8 +464,8 @@ function renderEx2() {
     <h2 class="screen-title">בחרי סוג ותקבלי תבנית מותאמת</h2>
     <p class="screen-subtitle">כאן בוחרים קטגוריה ספציפית, מקבלים שדות מותאמים לאותו שימוש, ופלט מעשי ומוכן יותר.</p>
 
-    <div class="card" style="margin-bottom:16px;background:rgba(167,139,250,.06);border-color:rgba(167,139,250,.2);">
-      <p style="font-size:13px;color:#C4B5FD;line-height:1.6;">💡 <strong>מה שונה כאן:</strong> בניגוד לתרגול הראשון, כאן השדות מותאמים לסוג התוכן שבחרת. הפלט ממוקד יותר ויישומי יותר.</p>
+    <div class="info-box">
+      <p class="info-box-text">💡 <strong>מה שונה כאן:</strong> בניגוד לתרגול הראשון, כאן השדות מותאמים לסוג התוכן שבחרת. הפלט ממוקד יותר ויישומי יותר.</p>
     </div>
 
     <div class="selection-grid">
@@ -491,7 +491,7 @@ function renderEx2() {
         `).join('')}
         <button class="btn-inline" onclick="generateEx2()">צור לי תבנית מוכנה</button>
       </div>
-    ` : `<p style="text-align:center;color:var(--text-3);font-size:14px;padding:16px 0;">↑ בחרי סוג תוכן כדי להמשיך</p>`}
+    ` : `<p style="text-align:center;color:#374151;font-size:17px;padding:16px 0;">↑ בחרי סוג תוכן כדי להמשיך</p>`}
 
     <div class="output-box" id="ex2-output">
       <p class="output-box-label">התבנית שלך — מוכנה להעתקה</p>
@@ -550,10 +550,10 @@ function renderTemplates() {
           <svg class="accordion-chevron" id="chevron-tmpl-${i}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <div class="accordion-body" id="acc-tmpl-${i}" dir="rtl">
-          <p style="font-size:12px;color:var(--text-3);margin:10px 0 8px;direction:rtl;text-align:right">${t.when}</p>
-          <div dir="rtl" style="white-space:pre-wrap;font-family:var(--font);font-size:13px;color:var(--text-2);
-               background:var(--bg-2,#111D31);padding:10px 12px;border-radius:var(--r-sm);
-               line-height:1.75;border:1px solid var(--border);
+          <p style="font-size:15px;color:#4B5563;margin:10px 0 8px;direction:rtl;text-align:right">${t.when}</p>
+          <div dir="rtl" style="white-space:pre-wrap;font-family:var(--font);font-size:17px;color:#1F2937;
+               background:var(--bg-2);padding:12px 14px;border-radius:var(--r-sm);
+               line-height:1.80;border:1px solid var(--border);
                direction:rtl;text-align:right;" id="tmpl-pre-${i}">${escHtml(t.body)}</div>
           <div class="output-actions" style="margin-top:8px">
             <button class="btn-copy" id="btn-tmpl-${i}" onclick="copyTemplate(${i})">
