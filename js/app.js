@@ -131,7 +131,7 @@ function renderIntro() {
     </div>
 
     <div class="intro-cta-wrap">
-      <button class="intro-cta-btn" onclick="navigate(1)">מתחילים ←</button>
+      <button class="intro-cta-btn" onclick="navigate(1)">מתחילים</button>
       <p class="intro-cta-note">חינמי · 10 דקות · ללא הרשמה</p>
     </div>
   `;
@@ -290,7 +290,7 @@ function renderEx1() {
              value="${escHtml(s.format)}" oninput="state.ex1.format=this.value">
     </div>
 
-    <button class="btn-inline" onclick="generateEx1()">✦ צור לי פרומפט</button>
+    <button class="btn-inline" onclick="generateEx1()">צור לי פרומפט</button>
 
     <div class="output-box" id="ex1-output">
       <p class="output-box-label">הפרומפט שלך — מוכן להעתקה</p>
@@ -489,7 +489,7 @@ function renderEx2() {
                    oninput="state.ex2['${f.key}']=this.value">
           </div>
         `).join('')}
-        <button class="btn-inline" onclick="generateEx2()">✦ צור לי תבנית מוכנה</button>
+        <button class="btn-inline" onclick="generateEx2()">צור לי תבנית מוכנה</button>
       </div>
     ` : `<p style="text-align:center;color:var(--text-3);font-size:14px;padding:16px 0;">↑ בחרי סוג תוכן כדי להמשיך</p>`}
 
@@ -654,7 +654,7 @@ function renderEnding() {
       </p>
       <a href="https://chat.whatsapp.com/IQ7iKLBplPC2zJyArmbfuq"
          target="_blank" rel="noopener noreferrer" class="btn-cta-link">
-        הצטרפות לקבוצה ←
+        הצטרפות לקבוצה
       </a>
     </div>
     <div style="height:48px"></div>
@@ -773,7 +773,7 @@ function renderQuizQuestion(container, qIdx) {
         ${escHtml(q.explain)}
       </div>
       <button class="quiz-next-btn" onclick="${qIdx < quizData.length - 1 ? 'quizAdvance()' : 'quizResults()'}">
-        ${qIdx < quizData.length - 1 ? `שאלה ${qIdx + 2} מתוך ${quizData.length} ←` : 'ראי את התוצאה ←'}
+        ${qIdx < quizData.length - 1 ? `שאלה ${qIdx + 2} מתוך ${quizData.length}` : 'ראי את התוצאה'}
       </button>
     ` : ''}
   `;
