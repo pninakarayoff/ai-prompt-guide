@@ -41,6 +41,13 @@
   --sh-sm: 0 1px 8px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
   --sh-md: 0 4px 24px rgba(0,0,0,0.12), 0 1px 6px rgba(0,0,0,0.06);
   --font: 'Heebo','Arial Hebrew',Arial,sans-serif;
+
+  /* Explicit semantic text tokens */
+  --text-primary:   #1F2937;
+  --text-secondary: #374151;
+  --heading:        #111827;
+  --info-text:      #374151;
+  --helper-text:    #374151;
 }
 
 /* --- Reset ------------------------------------------------- */
@@ -228,6 +235,24 @@ body {
 .card:active { transform: scale(.988); }
 .card-title { font-size: 18px; font-weight: 700; color: #111827; margin-bottom: 8px; }
 .card-text  { font-size: 18px; color: #374151; line-height: 1.80; }
+
+/* --- Info Box (tip / helper / exercise hint) -------------- */
+.info-box {
+  background: var(--accent-light);
+  border: 1px solid rgba(124,63,88,.18);
+  border-right: 3px solid var(--accent);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.info-box-text {
+  font-size: 17px;
+  color: var(--info-text);
+  line-height: 1.75;
+  direction: rtl;
+  text-align: right;
+}
+.info-box-text strong { color: #111827; font-weight: 700; }
 
 /* --- Highlight Box ---------------------------------------- */
 .highlight-box {
@@ -740,6 +765,17 @@ body {
 /* --- Responsive ------------------------------------------- */
 @media (min-width: 481px) {
   #app-footer { left: 50%; transform: translateX(-50%); right: auto; width: 480px; }
+}
+
+/* --- Mobile typography bump — one step up on small screens */
+@media (max-width: 480px) {
+  .card-text, .accordion-body, .check-list li,
+  .selfcheck-text, .output-text, .quiz-opt { font-size: 19px; }
+  .screen-subtitle { font-size: 19px; }
+  .accordion-example, .use-case-template,
+  .compare-card, .quiz-hint,
+  .intro-checklist li, .info-box-text { font-size: 18px; }
+  .quiz-review-item, .ending-cta-text { font-size: 18px; }
 }
 
 html, body {
